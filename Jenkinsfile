@@ -32,7 +32,9 @@ pipeline {
         
         stage('Build') {
             agent { 
-                docker { image 'docker:latest' }  // Use standard Docker image
+                docker { image 'docker:latest' 
+                       args '--user jenkins' 
+                    }  
             }
             environment {
                 IMAGE_NAME = 'ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}'
