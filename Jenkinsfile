@@ -40,7 +40,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'GITHUB_PAT', usernameVariable: 'GITHUB_PAT', passwordVariable: 'GITHUB_PASSWORD')]) {
                     sh """
-                    echo "${GITHUB_PASSWORD}" | docker login ghcr.io -u "${GITHUB_USERNAME}" --password-stdin
+                    mkdir -p $HOME/.docker
+                    echo ${GITHUB_PASSWORD} | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
                     """
                 }
                 sh "docker build -t ${IMAGE_NAME} ."
