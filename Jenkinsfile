@@ -21,7 +21,7 @@ pipeline {
                 docker { image 'maven:3.9.5-eclipse-temurin-17-alpine' } 
             }
             steps {
-                    mvn clean test               
+                   sh 'mvn clean test'       
             }
             post {
                 always {
