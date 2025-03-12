@@ -38,9 +38,9 @@ pipeline {
                 IMAGE_NAME = "ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}"
             }
             steps {
-                withCredentials([string(credentialsId: 'GITHUB_PAT', variable: 'GITHUB_TOKEN')]) {
+                withCredentials([usernamePassword(credentialsId: 'GITHUB_PAT', usernameVariable: 'GITHUB_PAT', passwordVariable: 'GITHUB_PASSWORD')]) {
                     sh """
-                    echo ${GITHUB_TOKEN} | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
+                    echo "${GITHUB_PASSWORD}" | docker login ghcr.io -u "${GITHUB_USERNAME}" --password-stdin
                     """
                 }
                 sh "docker build -t ${IMAGE_NAME} ."
