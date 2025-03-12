@@ -35,12 +35,14 @@ pipeline {
                 docker { image 'docker:dind' } 
             }
             steps {
-                sh '''
-                    echo "${GITHUB_PAT}" | docker login ghcr.io -u "${GITHUB_USERNAME}" --password-stdin
-        
-                    docker build -t ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER} .
-                    docker push ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}
-                '''
+                withCredentials([string(credentialsId: 'GITHUB_PAT', variable: 'GITHUB_TOKEN')]) {
+                    sh """
+                    echo \$GITHUB_TOKEN | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
+                    """
+                }
+                    sh docker build -t ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}
+                    sh docker push ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}
+                
             }
         }
         
