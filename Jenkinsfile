@@ -36,6 +36,10 @@ pipeline {
             agent {
                 docker { image 'docker:dind' reuseNode true }
             }
+            environment {
+                GITHUB_PAT = credentials('GITHUB_PAT')  // Fetches the token securely
+                GITHUB_USERNAME = 'your-github-username'
+            }
             steps {
                 sh '''
                     echo "${GITHUB_PAT}" | docker login ghcr.io -u "${GITHUB_USERNAME}" --password-stdin
@@ -56,7 +60,7 @@ pipeline {
                     git clone https://github.com/josliniyda27/JavaSpringBootApp.git
                     cd gitops-repo
                     sed -i "s|image: myregistry.example.com/myapp:.*|image: myregistry.example.com/myapp:${BUILD_NUMBER}|" kubernetes/deployment.yaml
-                    git config --global user.email "jenkins@example.com"
+                    git config --global user.email "test123@gmail.com"
                     git config --global user.name "Jenkins"
                     git add kubernetes/deployment.yaml
                     git commit -m "Update image to ${BUILD_NUMBER}"
