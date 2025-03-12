@@ -1,8 +1,5 @@
 pipeline {
     agent none
-    environment {
-        BUILD_NUMBER = ${BUILD_NUMBER} 
-    }
     
     stages {
         stage('Checkout') {
