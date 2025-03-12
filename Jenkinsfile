@@ -60,14 +60,15 @@ pipeline {
             }
             steps {
                 sh '''
-                    git clone https://github.com/josliniyda27/JavaSpringBootApp.git
-                    cd gitops-repo
-                    sed -i "s|image: myregistry.example.com/myapp:.*|image: myregistry.example.com/myapp:${BUILD_NUMBER}|" kubernetes/deployment.yaml
+                    git clone https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/josliniyda27/JavaSpringBootApp.git
+                    cd JavaSpringBootApp
+                    sed -i "s|image: ghcr.io/${GITHUB_USERNAME}/myapp:.*|image: ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}|" kubernetes/deployment.yaml
                     git config --global user.email "test123@gmail.com"
                     git config --global user.name "Jenkins"
                     git add kubernetes/deployment.yaml
                     git commit -m "Update image to ${BUILD_NUMBER}"
-                    git push
+                    git push https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/josliniyda27/JavaSpringBootApp.git
+
                 '''
             }
         }
