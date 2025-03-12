@@ -38,9 +38,10 @@ pipeline {
             }
             steps {
                 sh '''
-                    docker build -t myapp:${BUILD_NUMBER} .
-                    docker tag myapp:${BUILD_NUMBER} myregistry.example.com/myapp:${BUILD_NUMBER}
-                    docker push myregistry.example.com/myapp:${BUILD_NUMBER}
+                    echo "${GITHUB_PAT}" | docker login ghcr.io -u "${GITHUB_USERNAME}" --password-stdin
+        
+                    docker build -t ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER} .
+                    docker push ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}
                 '''
             }
         }
