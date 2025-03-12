@@ -8,14 +8,16 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            agent { docker { image 'alpine/git:latest' reuseNode true } }
+            agent { docker { image 'alpine/git:latest' 
+                             reuseNode true } }
             steps {
                 checkout scm
             }
         }
         
         stage('Test') {
-            agent { docker { image 'maven:3.9.5-eclipse-temurin-17-alpine' reuseNode true } }
+            agent { docker { image 'maven:3.9.5-eclipse-temurin-17-alpine' 
+                            reuseNode true } }
             steps {
                 sh '''
                     mvn clean test
@@ -35,7 +37,9 @@ pipeline {
         }
         
         stage('Build') {
-            agent { docker { image 'docker:dind' args '--privileged' reuseNode true  }  }
+            agent { docker { image 'docker:dind' 
+                            args '--privileged' 
+                            reuseNode true  }  }
             steps {
                 sh '''
                     echo "${GITHUB_PAT}" | docker login ghcr.io -u "${GITHUB_USERNAME}" --password-stdin
@@ -47,7 +51,8 @@ pipeline {
         }
         
         stage('Update Manifests') {
-            agent { docker { image 'alpine/git:latest' reuseNode true } }
+            agent { docker { image 'alpine/git:latest' 
+                            reuseNode true } }
             steps {
                 sh '''
                     git clone https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/josliniyda27/JavaSpringBootApp.git
