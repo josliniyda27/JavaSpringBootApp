@@ -52,7 +52,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    git clone https://github.com/your-org/gitops-repo.git
+                    git clone https://github.com/josliniyda27/JavaSpringBootApp.git
                     cd gitops-repo
                     sed -i "s|image: myregistry.example.com/myapp:.*|image: myregistry.example.com/myapp:${BUILD_NUMBER}|" kubernetes/deployment.yaml
                     git config --global user.email "jenkins@example.com"
