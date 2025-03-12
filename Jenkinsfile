@@ -1,5 +1,8 @@
 pipeline {
     agent none
+    environment {
+        BUILD_NUMBER = ${BUILD_NUMBER} 
+    }
     
     stages {
         stage('Checkout') {
@@ -38,7 +41,7 @@ pipeline {
             }
             environment {
                 GITHUB_PAT = credentials('GITHUB_PAT')  // Fetches the token securely
-                GITHUB_USERNAME = 'your-github-username'
+                GITHUB_USERNAME = 'josliniyda27'
             }
             steps {
                 sh '''
