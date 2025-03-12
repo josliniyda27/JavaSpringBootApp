@@ -40,7 +40,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'GITHUB_PAT', variable: 'GITHUB_TOKEN')]) {
                     sh """
-                    echo \$GITHUB_TOKEN | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
+                    echo ${GITHUB_TOKEN} | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
                     """
                 }
                 sh "docker build -t ${IMAGE_NAME} ."
@@ -64,7 +64,7 @@ pipeline {
                     git config --global user.name "Jenkins"
                     git add kubernetes/deployment.yaml
                     git commit -m "Update image to ${BUILD_NUMBER}"
-                    git push https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/josliniyda27/JavaSpringBootApp.git
+                    git push https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/${GITHUB_USERNAME}/JavaSpringBootApp.git
                 '''
             }
         }
