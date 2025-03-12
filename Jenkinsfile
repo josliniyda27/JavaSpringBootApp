@@ -29,13 +29,6 @@ pipeline {
                 }
             }
         }
-        stage('Coverage Report') {
-            steps {
-                script {
-                    coverage tool: 'JACOCO'
-                }
-            }
-}
         
         stage('Build') {
             agent { 
