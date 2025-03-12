@@ -35,17 +35,17 @@ pipeline {
                 docker { image 'docker:latest' }  // Use standard Docker image
             }
             environment {
-                IMAGE_NAME = "ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}"
+                IMAGE_NAME = 'ghcr.io/${GITHUB_USERNAME}/myapp:${BUILD_NUMBER}'
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'GITHUB_PAT', usernameVariable: 'GITHUB_PAT', passwordVariable: 'GITHUB_PASSWORD')]) {
-                    sh """
+                    sh '''
                     mkdir -p $HOME/.docker
                     echo ${GITHUB_PASSWORD} | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
-                    """
+                    '''
                 }
-                sh "docker build -t ${IMAGE_NAME} ."
-                sh "docker push ${IMAGE_NAME}"
+                sh 'docker build -t ${IMAGE_NAME} .'
+                sh 'docker push ${IMAGE_NAME}'
             }
         }
 
