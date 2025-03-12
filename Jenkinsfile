@@ -3,11 +3,7 @@ pipeline {
     
     stages {
         stage('Checkout') {
-            agent {
-                docker {
-                    image 'alpine/git:latest'
-                    reuseNode true
-                }
+            agent { docker { image 'alpine/git:latest' reuseNode true }
             }
             steps {
                 checkout scm
@@ -16,10 +12,7 @@ pipeline {
         
         stage('Test') {
             agent {
-                docker {
-                    image 'maven:3.9.5-eclipse-temurin-17-alpine'
-                    reuseNode true
-                }
+                docker { image 'maven:3.9.5-eclipse-temurin-17-alpine' reuseNode true }
             }
             steps {
                 sh '''
@@ -41,10 +34,7 @@ pipeline {
         
         stage('Build') {
             agent {
-                docker {
-                    image 'docker:dind'
-                    reuseNode true
-                }
+                docker { image 'docker:dind' reuseNode true }
             }
             steps {
                 sh '''
@@ -58,9 +48,7 @@ pipeline {
         stage('Update Manifests') {
             agent {
                 docker {
-                    image 'alpine/git:latest'
-                    reuseNode true
-                }
+                    image 'alpine/git:latest' reuseNode true }
             }
             steps {
                 sh '''
