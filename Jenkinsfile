@@ -33,7 +33,7 @@ pipeline {
         stage('Build') {
             agent { 
                 docker { image 'docker:latest' 
-                       args '--user jenkins' 
+                       args '--user root' 
                     }  
             }
             environment {
